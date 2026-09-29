@@ -13,6 +13,8 @@ Both gateways provide bearer authentication, exact per-client tool allowlists, f
 
 See the [animated working sample](docs/demo/README.md) for recorded allow, deny, validation, and rate-limit outcomes from both implementations.
 
+![Animated MCP guardrails demo showing allowed calls, denied tools, invalid input, and rate limits](docs/demo/mcp-guard-demo.gif)
+
 Both target **stateless MCP Streamable HTTP with JSON responses** and support protocol versions `2025-03-26`, `2025-06-18`, and `2025-11-25`. Stateful sessions, SSE, stdio, OAuth discovery, and model-based prompt injection detection are outside this version's scope. Use one worker per deployment for the in-memory quotas.
 
 ## Start a project
