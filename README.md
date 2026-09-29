@@ -11,6 +11,8 @@ Each folder contains its own dependencies, policy file, source code, demo MCP se
 
 Both gateways provide bearer authentication, exact per-client tool allowlists, filtered tool discovery, JSON Schema input validation, literal blocked-text checks, per-client and per-tool rate limits, size and concurrency limits, and audit logs that omit credentials and arguments.
 
+See the [animated working sample](docs/demo/README.md) for recorded allow, deny, validation, and rate-limit outcomes from both implementations.
+
 Both target **stateless MCP Streamable HTTP with JSON responses** and support protocol versions `2025-03-26`, `2025-06-18`, and `2025-11-25`. Stateful sessions, SSE, stdio, OAuth discovery, and model-based prompt injection detection are outside this version's scope. Use one worker per deployment for the in-memory quotas.
 
 ## Start a project

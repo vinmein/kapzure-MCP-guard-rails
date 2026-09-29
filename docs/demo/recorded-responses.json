@@ -1,0 +1,140 @@
+{
+  "source": "Actual in-process gateway requests; animation replays recorded outcomes.",
+  "demo_policy": "One echo call per client per 60 seconds; other policies unchanged.",
+  "scenarios": [
+    {
+      "title": "A valid call goes through",
+      "name": "echo",
+      "arguments": {
+        "text": "hello"
+      },
+      "status": 200,
+      "python": {
+        "status": 200,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "hello"
+              }
+            ]
+          }
+        },
+        "forwarded": true
+      },
+      "javascript": {
+        "status": 200,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "hello"
+              }
+            ]
+          }
+        },
+        "forwarded": true
+      }
+    },
+    {
+      "title": "A forbidden tool stops here",
+      "name": "admin_reset",
+      "arguments": {},
+      "status": 403,
+      "python": {
+        "status": 403,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 2,
+          "error": {
+            "code": -32003,
+            "message": "Tool is not permitted"
+          }
+        },
+        "forwarded": false
+      },
+      "javascript": {
+        "status": 403,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 2,
+          "error": {
+            "code": -32003,
+            "message": "Tool is not permitted"
+          }
+        },
+        "forwarded": false
+      }
+    },
+    {
+      "title": "Invalid input never reaches the tool",
+      "name": "echo",
+      "arguments": {
+        "text": 42
+      },
+      "status": 400,
+      "python": {
+        "status": 400,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 3,
+          "error": {
+            "code": -32602,
+            "message": "Tool arguments violate the configured schema"
+          }
+        },
+        "forwarded": false
+      },
+      "javascript": {
+        "status": 400,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 3,
+          "error": {
+            "code": -32602,
+            "message": "Tool arguments violate the configured schema"
+          }
+        },
+        "forwarded": false
+      }
+    },
+    {
+      "title": "Repeated calls hit the rate limit",
+      "name": "echo",
+      "arguments": {
+        "text": "hello again"
+      },
+      "status": 429,
+      "python": {
+        "status": 429,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 4,
+          "error": {
+            "code": -32029,
+            "message": "Rate limit exceeded"
+          }
+        },
+        "forwarded": false
+      },
+      "javascript": {
+        "status": 429,
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 4,
+          "error": {
+            "code": -32029,
+            "message": "Rate limit exceeded"
+          }
+        },
+        "forwarded": false
+      }
+    }
+  ]
+}
